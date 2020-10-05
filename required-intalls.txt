@@ -1,0 +1,16 @@
+pip install flask
+sudo apt-get install mysql-server libmysqlclient-dev
+sudo apt-get install python-mysqldb
+pip install flask-mysqldb
+pip install flask-WTF
+pip install passlib
+
+
+
+
+DATABASE: sudo mysql -u root -p
+
+
+CREATE DATABASE donatech;
+USE donatech;
+CREATE TABLE users(id INT(11) AUTO_INCREMENT PRIMARY KEY, email VARCHAR(100), name VARCHAR(100) , password VARCHAR(100), role VARCHAR(100), CPF INT(11));
