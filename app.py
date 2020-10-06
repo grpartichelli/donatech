@@ -215,7 +215,25 @@ def doar():
 
 ####################################################################
 
+# PROCURAR ITEMS
 
+
+@app.route("/procuraritems")
+def procuraritems():
+    # Making a cursor to use the db
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM equipaments;")
+    equips = cur.fetchall()
+    cur.close()
+
+    data = []
+    for e in equips:
+        if e["visible"] == 1:
+            data.append(e)
+    return render_template("procuraritems.html", data=data)
+
+
+############################################
 app.secret_key = 'super secret key'
 if __name__ == '__main__':
     app.run(debug=True)
