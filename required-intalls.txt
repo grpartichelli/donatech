@@ -13,3 +13,5 @@ CREATE DATABASE donatech;
 USE donatech;
 CREATE TABLE users(id INT(11) AUTO_INCREMENT PRIMARY KEY, email VARCHAR(100), name VARCHAR(100) , password VARCHAR(100), role VARCHAR(100), CPF VARCHAR(100));
 
+CREATE TABLE equipaments(equipid INT(11) AUTO_INCREMENT PRIMARY KEY, userid INT(11), marca VARCHAR(100), description VARCHAR(500) , type VARCHAR(100), visible INT(1));
+

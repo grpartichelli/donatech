@@ -2,7 +2,9 @@
 
 
 
-
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/grid.css') }}">
+{% endblock %}
 
 
 {% block body %}
@@ -13,19 +15,29 @@
 
 
         <main role="main" class="inner cover">
-            <h2> Bem-Vindo {{session.name}}! </h2>
-            <p class="lead">Ajude doando um equipamento eletrônico ou solicite um caso necessite.</p>
+            <h2> Olá {{session.name}}! </h2>
+            <p class="lead">Página de Administração de Equipamentos</p>
             <p class="lead">
 
-                <a href="/doar" class="btn btn-lg btn-primary"> Doar </a>
-                <a href="/dashboard" class="btn btn-lg btn-secondary"> Solicitar</a>
-                {% if session.role == "admin" %}
-                <a href="/admin" class="btn btn-lg btn-dark"> Opções de Administrador</a>
-                {% endif %}
 
 
             </p>
         </main>
+
+
+
+        <div class="row">
+            <div class="col-md-8">
+                Marca do Equipamento
+                <div class="row">
+                    <div class="col-md-6">Tipo</div>
+                    <div class="col-md-6">Visivel</div>
+                </div>
+            </div>
+            <div class="col-md-4">Descrição do Equipamento</div>
+        </div>
+
+        <hr class="mb-4">
 
 
     </div>
@@ -34,7 +46,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>

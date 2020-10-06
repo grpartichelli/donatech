@@ -5,66 +5,64 @@
 
 <body class="bg-light">
     <div class="container">
-  <div class="mt-4 text-center">
-    <img class="d-block mx-auto mb-0" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="0">
-    <h2>Formulário de Doação</h2>
-    <p class="lead">Por favor insira as informações sobre o item que deseja doar.</p>
-  </div>
+        <div class="mt-4 text-center">
+            <img class="d-block mx-auto mb-0" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72">
+            <h2>Formulário de Doação</h2>
+            <p class="lead">Por favor insira as informações sobre o item que deseja doar.</p>
+        </div>
 
-  <div class="">
-   
-    <div class="">
-      <form class="needs-validation" novalidate>
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="firstName">Marca do Equipamento</label>
-            <input type="text"  class="form-control" id="firstName" placeholder="Marca" value={{request.form.description}} >
-            <div class="invalid-feedback">
-              Valid first name is required.
+
+        <form class="form-signin" method="POST">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="firstName">Marca do Equipamento</label>
+                    <input name="marca" type="text" class="form-control" id="firstName" placeholder="Marca"
+                        value={{request.form.marca}}>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="mb-3">
-          <label for="email">Descrição </label>
-          <input type="text" class="form-control"  placeholder="Adicione uma pequena descrição do equipamento." value={{request.form.description}}>
-        </div>
-
-        <div class="row">
-          <div class="col-md-5 mb-3">
-            <label for="country">Tipo de Equipamento</label>
-            <select class="custom-select d-block w-100" id="country" value={{request.form.type}} required>
-              <option value="">Escolha..</option>
-              <option>Computador Desktop</option>
-              <option>Computador Notebook</option>
-              <option>Monitor</option>
-              <option>Teclado</option>
-              <option>Mouse</option>
-              <option>Câmera</option>
-              <option>Microfone</option>
-              <option>Fone</option>
-
-            </select>
-            <div class="invalid-feedback">
-              Por favor inisira um equipamento valdio
+            <div class="mb-3">
+                <label for="email">Descrição </label>
+                <input name="description" type="text" class="form-control"
+                    placeholder="Adicione uma pequena descrição do equipamento." value={{request.form.description}}>
             </div>
-          </div>
-          </div>
-        </div>
-        <hr class="mb-4">
-       
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="save-info" value={{request.form.accept}}>
-          <label class="custom-control-label" for="save-info">Eu aceito doar esse equipamento e entendo que não receberei dinheiro em troca.</label>
-        </div>
 
-        <hr class="mb-4">
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                    <label for="country">Tipo de Equipamento</label>
+                    <select name="type" class="custom-select d-block w-100" id="country" value={{request.form.type}}
+                        required>
+                        <option>Escolha..</option>
+                        <option>Computador Desktop</option>
+                        <option>Computador Notebook</option>
+                        <option>Monitor</option>
+                        <option>Teclado</option>
+                        <option>Mouse</option>
+                        <option>Câmera</option>
+                        <option>Microfone</option>
+                        <option>Fone</option>
 
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Enviar para Doação</button>
-      </form>
+                    </select>
+                    <div class="invalid-feedback">
+                        Por favor inisira um equipamento valdio
+                    </div>
+                </div>
+            </div>
     </div>
-  </div>
+    <hr class="mb-4">
+
+    <div class="custom-control custom-checkbox">
+        <input name="accept" type="checkbox" class="custom-control-input" id="save-info" value={{request.form.accept}}>
+        <label class="custom-control-label" for="save-info">Eu aceito doar esse equipamento e entendo que não receberei
+            dinheiro em troca.</label>
+    </div>
+
+    <hr class="mb-4">
+
+    <button class="btn btn-primary btn-lg btn-block" type="submit">Enviar para Doação</button>
+    </form>
 
 
-</div>
-{%endblock %}
+
+    </div>
+    {%endblock %}

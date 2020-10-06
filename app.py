@@ -78,8 +78,9 @@ def login():
             if sha256_crypt.verify(password_candidate, password):
                 session['logged_in'] = True
                 session['email'] = email
-                session['rolate'] = data['role']
+                session['role'] = data['role']
                 session['name'] = data['name']
+                session['userid'] = data['id']
 
                 flash("Você está logado.", "success")
 
@@ -99,8 +100,10 @@ def login():
 
         cur.close()
     return render_template('login.html')
-####################################################################
 
+
+####################################################################
+# WRAPPERS
 # Check if user logged_in
 
 
@@ -114,6 +117,19 @@ def is_logged_in(f):
             return redirect(url_for("login"))
     return wrap
 
+# Check if user is admin logged_in
+
+
+def is_admin(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if session["role"] == 'admin':
+            return f(*args, **kwargs)
+        else:
+            flash("Somente Administradores podem acessar essa área", "danger")
+            return redirect(url_for("/dashboard"))
+    return wrap
+
 
 ####################################################################
 # DASHBOARD
@@ -123,6 +139,15 @@ def is_logged_in(f):
 @is_logged_in
 def dashboard():
     return render_template('dashboard.html')
+
+####################################################################
+# ADMIN
+
+
+@app.route('/admin')
+@is_admin
+def admin():
+    return render_template('admin.html')
 
 
 #################################
@@ -136,13 +161,38 @@ def logout():
     session["logged_in"] = False
     return redirect(url_for('login'))
 
-#################################
+####################################################
 # DOAR
 
-@app.route("/doar")
+
+@app.route("/doar", methods=['GET', 'POST'])
 def doar():
+
+    if request.method == 'POST':
+
+        userid = session["userid"]
+        tipo = request.form["type"]
+        description = request.form["description"]
+        marca = request.form["marca"]
+
+        if "accept" in request.form:
+            # Making a cursor to use the db
+            cur = mysql.connection.cursor()
+            #cur.execute("SELECT * FROM users WHERE email = lol")
+            cur.execute("INSERT INTO equipaments(userid, marca, description,type, visible) VALUES(%s,%s,%s,%s,%s)",
+                        (userid, marca, description, tipo, 0))
+            mysql.connection.commit()
+            cur.close()
+            flash(
+                "Sua doação foi registrada com sucesso e será avaliada por um administrador.", "success")
+            return redirect(url_for('dashboard'))
+
+        else:
+            return render_template('doar.html', error="Você deve marcar a checkbox.")
+
     return render_template('doar.html')
 
+####################################################################
 
 
 app.secret_key = 'super secret key'
