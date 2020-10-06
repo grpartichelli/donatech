@@ -17,27 +17,24 @@
         <main role="main" class="inner cover">
             <h2> Olá {{session.name}}! </h2>
             <p class="lead">Página de Administração de Equipamentos</p>
-            <p class="lead">
-
-
-
-            </p>
         </main>
-
-
-
+        {% for d in data %}
         <div class="row">
             <div class="col-md-8">
-                Marca do Equipamento
+                {{d["marca"]}}
                 <div class="row">
-                    <div class="col-md-6">Tipo</div>
-                    <div class="col-md-6">Visivel</div>
+                    <div class="col-md-6">{{d["type"]}}</div>
+                    <div class="col-md-6">{{"Visible: "~d["visible"]}}</div>
                 </div>
             </div>
-            <div class="col-md-4">Descrição do Equipamento</div>
+            <div class="col-md-4">{{d["description"]}}</div>
         </div>
 
         <hr class="mb-4">
+        {% endfor %}
+
+
+
 
 
     </div>

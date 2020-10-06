@@ -17,8 +17,8 @@ body {
   [class*="col-"] {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    background-color: rgba(34, 31, 39, 0.15);
-    border: 1px solid rgba(34, 31, 39, 0.15);
+    background-color: rgba(34, 31, 39, 0.25);
+    border: 1px solid rgba(20, 19, 20, 0.25);
   }
   
   hr {

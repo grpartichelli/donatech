@@ -147,7 +147,12 @@ def dashboard():
 @app.route('/admin')
 @is_admin
 def admin():
-    return render_template('admin.html')
+    # Making a cursor to use the db
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM equipaments;")
+    data = cur.fetchall()
+    cur.close()
+    return render_template('admin.html', data=data)
 
 
 #################################
