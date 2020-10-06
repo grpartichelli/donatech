@@ -178,7 +178,7 @@ def toggle_visible(equipid, visible):
 @app.route("/logout")
 def logout():
     session.clear()
-    flash("Você está deslogou", "success")
+    flash("Você está deslogado", "success")
     session["logged_in"] = False
     return redirect(url_for('login'))
 
