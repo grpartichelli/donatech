@@ -14,15 +14,22 @@ app.config['MYSQL_PASSWORD'] = '12345'
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 mysql = MySQL(app)
+
+
+#############################################################################
 # HOME ROUTE
 
 
 @app.route('/')
 def index():
+    if session["logged_in"]:
+        return redirect(url_for("dashboard"))
     return render_template('home.html')
 
-
+#################################################################################
 # REGISTER ROUTE
+
+
 class RegisterForm(Form):
     name = StringField('Name', [validators.length(min=1, max=50)])
     email = StringField('Email', [validators.Length(min=6, max=50)])
@@ -49,18 +56,15 @@ def register():
         redirect(url_for("index"))
     return render_template('register.html', form=form)
 
+
+########################################################
 # LOGIN ROUTE
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
     if request.method == 'POST':
         email = request.form["email"]
         password_candidate = request.form["password"]
-        print(password_candidate)
-        print(email)
-        print('AAAAAAAAA')
 
         # Making a cursor to use the db
         cur = mysql.connection.cursor()
@@ -72,18 +76,49 @@ def login():
 
             # Compare passwords
             if sha256_crypt.verify(password_candidate, password):
-                suc = "Você está logado."
-                return render_template('login.html', msg=suc)
+                session['logged_in'] = True
+                session['email'] = email
+                session['rolate'] = data['role']
+                session['name'] = data['name']
+
+                flash("Você está logado.", "success")
+
+                cur.close()
+                return redirect(url_for("dashboard"))
             else:
                 er = "Login falhou."
+
+                cur.close()
                 return render_template('login.html', error=er)
 
         else:
             er = "Email não encontrado."
+
+            cur.close()
             return render_template('login.html', error=er)
 
         cur.close()
     return render_template('login.html')
+
+####################################################################
+# DASHBOARD
+
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+
+#################################
+# LOGOUT
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("Você está logout.", "success")
+    session["logged_in"] = False
+    return redirect(url_for('login'))
 
 
 app.secret_key = 'super secret key'

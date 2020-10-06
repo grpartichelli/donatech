@@ -1,4 +1,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
+
+
+
     <a class="navbar-brand" href="/">Donatech</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -7,9 +10,7 @@
 
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
-            </li>
+
 
             <li class="nav-item active">
                 <a class="nav-link" href="/">Contato<span class="sr-only">(current)</span></a>
@@ -19,8 +20,29 @@
             </li>
 
         </ul>
-        <form class="form-inline my-2 my-md-0">
-            <input class="form-control" type="text" placeholder="Procurar Eletrônico">
-        </form>
+        <ul class="navbar-nav navbar-right">
+
+
+            {% if session.logged_in %}
+            <li class="nav-item active">
+                <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+            </li>
+
+
+            {% else %}
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/register">Cadastre-se<span class="sr-only">(current)</span></a>
+            </li>
+
+            {%endif%}
+
+
+        </ul>
+
     </div>
 </nav>

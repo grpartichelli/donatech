@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 
 
+
+
+
+
 {% block body %}
 
 <body class="text-center">
@@ -9,14 +13,12 @@
 
 
         <main role="main" class="inner cover">
-            <h1 class="cover-heading">Bem-Vindo a Donatech</h1>
-            <p class="lead">Um sistema onde pessoas doam eletrônicos como
-                para alunos que participem de atividades à distância e não
-                possam arcar com os custos dos equipamentos necessários.</p>
+            <h2> Bem-Vindo {{session.name}}! </h2>
+            <p class="lead">Ajude doando um equipamento eletrônico ou solicite um caso necessite.</p>
             <p class="lead">
 
-                <a href="/login" class="btn btn-lg btn-primary"> Login </a>
-                <a href="/register" class="btn btn-lg btn-secondary">Cadastre-se</a>
+                <a href="/dashboard" class="btn btn-lg btn-primary"> Doar </a>
+                <a href="/dashboard" class="btn btn-lg btn-secondary"> Solicitar</a>
 
             </p>
         </main>
