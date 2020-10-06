@@ -11,7 +11,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_DB'] = 'donatech'
 app.config['MYSQL_PASSWORD'] = '12345'
-app.config['MY_CURSORCLASS'] = 'DictCursor'
+app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 mysql = MySQL(app)
 # HOME ROUTE
@@ -54,9 +54,13 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     if request.method == 'POST':
         email = request.form["email"]
         password_candidate = request.form["password"]
+        print(password_candidate)
+        print(email)
+        print('AAAAAAAAA')
 
         # Making a cursor to use the db
         cur = mysql.connection.cursor()
@@ -68,12 +72,15 @@ def login():
 
             # Compare passwords
             if sha256_crypt.verify(password_candidate, password):
-                pass
+                suc = "Você está logado."
+                return render_template('login.html', msg=suc)
             else:
-                pass
+                er = "Login falhou."
+                return render_template('login.html', error=er)
 
         else:
-            pass
+            er = "Email não encontrado."
+            return render_template('login.html', error=er)
 
         cur.close()
     return render_template('login.html')
