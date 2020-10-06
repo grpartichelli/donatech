@@ -136,6 +136,14 @@ def logout():
     session["logged_in"] = False
     return redirect(url_for('login'))
 
+#################################
+# DOAR
+
+@app.route("/doar")
+def doar():
+    return render_template('doar.html')
+
+
 
 app.secret_key = 'super secret key'
 if __name__ == '__main__':
