@@ -152,8 +152,24 @@ def admin():
     cur.execute("SELECT * FROM equipaments;")
     data = cur.fetchall()
     cur.close()
+
     return render_template('admin.html', data=data)
 
+
+@app.route('/toggle_visible/<equipid>/<visible>', methods=['POST'])
+def toggle_visible(equipid, visible):
+    # Making a cursor to change the db
+    cur = mysql.connection.cursor()
+
+    if visible == "1":
+        v = 0
+    else:
+        v = 1
+    cur.execute(
+        "UPDATE equipaments SET visible = %s  WHERE equipid = %s", (v, equipid))
+    mysql.connection.commit()
+    cur.close()
+    return redirect(url_for('admin'))
 
 #################################
 # LOGOUT
@@ -183,7 +199,7 @@ def doar():
         if "accept" in request.form:
             # Making a cursor to use the db
             cur = mysql.connection.cursor()
-            #cur.execute("SELECT * FROM users WHERE email = lol")
+            # cur.execute("SELECT * FROM users WHERE email = lol")
             cur.execute("INSERT INTO equipaments(userid, marca, description,type, visible) VALUES(%s,%s,%s,%s,%s)",
                         (userid, marca, description, tipo, 0))
             mysql.connection.commit()
