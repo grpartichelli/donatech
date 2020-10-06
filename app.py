@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, flash, redirect, url_for, ses
 from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
-
+from functools import wraps
 
 app = Flask(__name__)
 
@@ -99,12 +99,28 @@ def login():
 
         cur.close()
     return render_template('login.html')
+####################################################################
+
+# Check if user logged_in
+
+
+def is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if session["logged_in"]:
+            return f(*args, **kwargs)
+        else:
+            flash("Por favor login para poder acessar essa área.", "danger")
+            return redirect(url_for("login"))
+    return wrap
+
 
 ####################################################################
 # DASHBOARD
 
 
 @app.route('/dashboard')
+@is_logged_in
 def dashboard():
     return render_template('dashboard.html')
 
