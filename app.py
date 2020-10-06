@@ -178,7 +178,7 @@ def toggle_visible(equipid, visible):
 @app.route("/logout")
 def logout():
     session.clear()
-    flash("Você está logout.", "success")
+    flash("Você está deslogou", "success")
     session["logged_in"] = False
     return redirect(url_for('login'))
 
@@ -222,15 +222,39 @@ def doar():
 def procuraritems():
     # Making a cursor to use the db
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM equipaments;")
+    cur.execute("SELECT * FROM equipaments where visible = 1")
     equips = cur.fetchall()
+
+    # remove items on the users wishlist
+    cur.execute("SELECT * FROM wishlist where userid = %s",
+                (session["userid"],))
+    wishlist = cur.fetchall()
     cur.close()
 
     data = []
+    # probably overcomplicated im tired
     for e in equips:
-        if e["visible"] == 1:
+        flag = True
+        for w in wishlist:
+            if e["equipid"] == w["equipid"]:
+                flag = False
+
+        if flag:
             data.append(e)
+
     return render_template("procuraritems.html", data=data)
+
+
+@app.route('/add_to_wishlist/<equipid>', methods=['POST'])
+def add_to_wishlist(equipid):
+    # Making a cursor to change the db
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO wishlist(equipid,userid) VALUES(%s,%s)",
+                (equipid, session["userid"]))
+    mysql.connection.commit()
+    cur.close()
+    flash("Item adicionado com sucesso", "success")
+    return redirect(url_for('procuraritems'))
 
 
 ############################################

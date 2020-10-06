@@ -22,9 +22,13 @@
             <div class="col-md-4">{{d["description"]}}</div>
         </div>
 
+        <form action="{{ url_for('add_to_wishlist', equipid = d['equipid'])}}" method=post>
+            <input class="btn btn-lg btn-secondary" type=submit value=" Adicionar a Sua Lista de Desejos">
+        </form>
 
 
-        <hr class="mb-4">
+
+        <hr class="mb-2">
         {% endfor %}
 
 

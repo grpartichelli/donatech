@@ -15,3 +15,4 @@ CREATE TABLE users(id INT(11) AUTO_INCREMENT PRIMARY KEY, email VARCHAR(100), na
 
 CREATE TABLE equipaments(equipid INT(11) AUTO_INCREMENT PRIMARY KEY, userid INT(11), marca VARCHAR(100), description VARCHAR(500) , type VARCHAR(100), visible INT(1));
 
+CREATE TABLE wishlist(equipid INT(11)  , userid INT(11) ,PRIMARY KEY (equipid,userid))
