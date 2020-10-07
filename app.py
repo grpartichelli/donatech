@@ -22,9 +22,11 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index():
-    if session["logged_in"]:
-        return redirect(url_for("dashboard"))
-    return render_template('home.html')
+    try:
+        if session["logged_in"]:
+            return redirect(url_for("dashboard"))
+    finally:
+        return render_template('home.html')
 
 #################################################################################
 # REGISTER ROUTE
