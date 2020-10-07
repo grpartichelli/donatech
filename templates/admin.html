@@ -19,7 +19,11 @@
             <p class="lead">Página de Administração de Equipamentos</p>
         </main>
 
-
+        {% if "equiptype" not in request.form or request.form["equiptype"]== "Mostrar Todos" or request.form["equiptype"]== "Equipamento..."  %}
+        <p class="lead"></p>
+        {% else %}
+        <p class="lead">Mostrando todos os items do tipo {{request.form["equiptype"]}}.</p>
+        {% endif %}
 
         <div>
             <div class="mb-3" style="float:left; width:50%">
@@ -89,10 +93,20 @@
             </div>
             <div class="col-md-4">{{d["description"]}}</div>
         </div>
+        <div>
+            <div class="mb-3" style="float:left; width:50%">
+                <form action="{{ url_for('admin_api.toggle_visible', equipid = d['equipid'], visible= d['visible'])}}"
+                    method=post>
+                    <input class="btn btn-lg btn-secondary" type="submit" value=" Trocar Visibilidade">
+                </form>
+            </div>
+            <div class="mb-3" style="float:left; width:50%">
+                <form action="{{ url_for('admin_api.delete_equip', equipid = d['equipid'])}}" method=post>
+                    <input class="btn btn-lg btn-danger" type="submit" value="Remover Equipamento">
+                </form>
+            </div>
+        </div>
 
-        <form action="{{ url_for('toggle_visible', equipid = d['equipid'], visible= d['visible'])}}" method=post>
-            <input class="btn btn-lg btn-secondary" type="submit" value=" Trocar Visibilidade">
-        </form>
 
         <hr class="mb-4">
         {% endfor %}
