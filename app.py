@@ -252,7 +252,6 @@ def procuraritems():
 
     # If user made a search
     if request.method == "POST":
-
         # search for the correct equipments
         if request.form["equiptype"] != "Mostrar Todos" and request.form["equiptype"] != "Equipamento...":
             data = []

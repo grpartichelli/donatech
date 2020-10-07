@@ -13,7 +13,7 @@
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
         <h2> Selecione os Equipamentos para sua Lista de Desejos! </h2>
-        {% if request.form["equiptype"]== "Mostrar Todos" and request.form["equiptype"]== "Equipamento..."  %}
+        {% if request.form["equiptype"]== "Mostrar Todos" or request.form["equiptype"]== "Equipamento..."  %}
         <p class="lead">Administradores terão a informação de que você adicionou esses items.</p>
         {% else %}
         <p class="lead">Mostrando todos os items do tipo {{request.form["equiptype"]}}.</p>
@@ -21,11 +21,14 @@
 
         <label for="equips">Procurar por Tipo de Equipamento</label>
 
+
+
+
         <form id="contact-form" role="form" method="post">
             <div class="mb-3 parent">
                 <div class="mb-3" style="display: inline-block">
-                    <select name="equiptype" class="custom-select d-block" id="equiptype"
-                        value={{request.form.equiptype}}">
+                    <select name="equiptype" class="custom-select d-block w-100" id="equiptype"
+                        value={{request.form.type}} required>
                         <option hidden>Equipamento...</option>
                         <option>Mostrar Todos</option>
                         <option>Computador Desktop</option>
@@ -46,6 +49,9 @@
 
 
         </form>
+
+
+
         {% for d in data %}
         <div class="row">
             <div class="col-md-4">{{d["marca"]}}</div>
@@ -57,10 +63,10 @@
             <input class="btn btn-lg btn-secondary" type=submit value=" Adicionar a Sua Lista de Desejos">
         </form>
 
-
-
         <hr class="mb-2">
         {% endfor %}
+
+
 
 
 
