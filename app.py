@@ -22,11 +22,15 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index():
+
     try:
         if session["logged_in"]:
             return redirect(url_for("dashboard"))
-    finally:
+        else:
+            return render_template('home.html')
+    except:
         return render_template('home.html')
+
 
 #################################################################################
 # REGISTER ROUTE
@@ -220,8 +224,9 @@ def doar():
 # PROCURAR ITEMS
 
 
-@app.route("/procuraritems")
+@app.route("/procuraritems", methods=['GET', 'POST'])
 def procuraritems():
+
     # Making a cursor to use the db
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM equipaments where visible = 1")
@@ -233,7 +238,7 @@ def procuraritems():
     wishlist = cur.fetchall()
     cur.close()
 
-    data = []
+    nonwishlistequips = []
     # probably overcomplicated im tired
     for e in equips:
         flag = True
@@ -242,7 +247,18 @@ def procuraritems():
                 flag = False
 
         if flag:
-            data.append(e)
+            nonwishlistequips.append(e)
+    data = nonwishlistequips
+
+    # If user made a search
+    if request.method == "POST":
+
+        # search for the correct equipments
+        if request.form["equiptype"] != "Mostrar Todos" and request.form["equiptype"] != "Equipamento...":
+            data = []
+            for e in nonwishlistequips:
+                if e["type"] == request.form["equiptype"]:
+                    data.append(e)
 
     return render_template("procuraritems.html", data=data)
 

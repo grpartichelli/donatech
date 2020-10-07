@@ -13,8 +13,39 @@
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
         <h2> Selecione os Equipamentos para sua Lista de Desejos! </h2>
+        {% if request.form["equiptype"]== "Mostrar Todos" and request.form["equiptype"]== "Equipamento..."  %}
         <p class="lead">Administradores terão a informação de que você adicionou esses items.</p>
+        {% else %}
+        <p class="lead">Mostrando todos os items do tipo {{request.form["equiptype"]}}.</p>
+        {% endif %}
 
+        <label for="equips">Procurar por Tipo de Equipamento</label>
+
+        <form id="contact-form" role="form" method="post">
+            <div class="mb-3 parent">
+                <div class="mb-3" style="display: inline-block">
+                    <select name="equiptype" class="custom-select d-block" id="equiptype"
+                        value={{request.form.equiptype}}">
+                        <option hidden>Equipamento...</option>
+                        <option>Mostrar Todos</option>
+                        <option>Computador Desktop</option>
+                        <option>Computador Notebook</option>
+                        <option>Monitor</option>
+                        <option>Teclado</option>
+                        <option>Mouse</option>
+                        <option>Câmera</option>
+                        <option>Microfone</option>
+                        <option>Fone</option>
+                    </select>
+
+                </div>
+                <div style="display: inline-block">
+                    <button class="btn btn-secondary" type="submit">Procurar</button>
+                </div>
+            </div>
+
+
+        </form>
         {% for d in data %}
         <div class="row">
             <div class="col-md-4">{{d["marca"]}}</div>
