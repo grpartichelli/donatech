@@ -290,7 +290,42 @@ def add_to_wishlist(equipid):
     return redirect(url_for('procuraritems'))
 
 
+@app.route('/wishlist', methods=['GET', 'POST'])
+def wishlist():
+
+    # Making a cursor to use the db
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM equipaments where visible = 1")
+    equips = cur.fetchall()
+
+    # remove items on the users wishlist
+    cur.execute("SELECT * FROM wishlist where userid = %s",
+                (session["userid"],))
+    wishlist = cur.fetchall()
+    cur.close()
+
+    wishlistequips = []
+    # probably overcomplicated im tired
+    for e in equips:
+        for w in wishlist:
+            if e["equipid"] == w["equipid"]:
+                wishlistequips.append(e)
+
+    data = wishlistequips
+
+    # If user made a search
+    if request.method == "POST":
+        # search for the correct equipments
+        if request.form["equiptype"] != "Mostrar Todos" and request.form["equiptype"] != "Equipamento...":
+            data = []
+            for e in wishlistequips:
+                if e["type"] == request.form["equiptype"]:
+                    data.append(e)
+
+    return render_template("wishlist.html", data=data)
 ############################################
+
+
 app.secret_key = 'super secret key'
 if __name__ == '__main__':
     app.run(debug=True)

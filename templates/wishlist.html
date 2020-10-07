@@ -12,18 +12,8 @@
 
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
-        <h2> Selecione os Equipamentos para sua Lista de Desejos! </h2>
-        {% if "equiptype" not in request.form or request.form["equiptype"]== "Mostrar Todos" or request.form["equiptype"]== "Equipamento..."  %}
-        <p class="lead">Administradores terão a informação de que você adicionou esses items.</p>
-        {% else %}
-        <p class="lead">Mostrando todos os items do tipo {{request.form["equiptype"]}}.</p>
-        {% endif %}
-
-
-
-        <div class="mb-3">
-            <a href="/wishlist" class="btn btn-success">Ver sua Lista de Desejos</a>
-        </div>
+        <h3> Lista de Desejos! </h3>
+        <p class="lead">Estamos tentando conseguir esses items para você</p>
 
 
         <form id="contact-form" role="form" method="post">
@@ -54,9 +44,6 @@
         </form>
 
 
-
-
-
         {% for d in data %}
         <div class="row">
             <div class="col-md-4">{{d["marca"]}}</div>
@@ -64,9 +51,6 @@
             <div class="col-md-4">{{d["description"]}}</div>
         </div>
 
-        <form action="{{ url_for('add_to_wishlist', equipid = d['equipid'])}}" method=post>
-            <input class="btn btn-lg btn-secondary" type=submit value=" Adicionar a Sua Lista de Desejos">
-        </form>
 
         <hr class="mb-2">
         {% endfor %}
