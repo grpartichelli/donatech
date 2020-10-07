@@ -18,6 +18,66 @@
             <h2> Olá {{session.name}}! </h2>
             <p class="lead">Página de Administração de Equipamentos</p>
         </main>
+
+
+
+        <div>
+            <div class="mb-3" style="float:left; width:50%">
+                <label for="equips">Procurar por Tipo de Equipamento</label>
+                <form id="contact-form" role="form" method="post">
+                    <div class="mb-3 parent">
+                        <div class="mb-3" style="display: inline-block">
+
+                            <select name="equiptype" class="custom-select d-block w-100" id="equiptype"
+                                value={{request.form.equiptype}} required>
+                                <option hidden>Equipamento...</option>
+                                <option>Mostrar Todos</option>
+                                <option>Computador Desktop</option>
+                                <option>Computador Notebook</option>
+                                <option>Monitor</option>
+                                <option>Teclado</option>
+                                <option>Mouse</option>
+                                <option>Câmera</option>
+                                <option>Microfone</option>
+                                <option>Fone</option>
+                            </select>
+
+                        </div>
+                        <div style="display: inline-block">
+                            <button class="btn btn-secondary" type="submit">Procurar</button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="mb-3" style="float:left; width:50%">
+                <label for="visibilits">Procurar por Visibilidade</label>
+                <form id="contact-form" role="form" method="post">
+                    <div class="mb-3 parent">
+                        <div class="mb-3" style="display: inline-block">
+
+                            <select name="visibility" class="custom-select d-block w-100" id="visibility"
+                                value={{request.form.visibility}} required>
+                                <option hidden>Mostrar Todos</option>
+                                <option>Visiveis</option>
+                                <option>Invisiveis</option>
+                            </select>
+
+                        </div>
+                        <div style="display: inline-block">
+                            <button class="btn btn-secondary" type="submit">Procurar</button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+        </div>
+
+
+
         {% for d in data %}
         <div class="row">
             <div class="col-md-8">

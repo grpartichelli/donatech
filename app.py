@@ -23,12 +23,9 @@ mysql = MySQL(app)
 @app.route('/')
 def index():
 
-    try:
-        if session["logged_in"]:
-            return redirect(url_for("dashboard"))
-        else:
-            return render_template('home.html')
-    except:
+    if "logged_in" in session and session["logged_in"]:
+        return redirect(url_for("dashboard"))
+    else:
         return render_template('home.html')
 
 
@@ -150,7 +147,7 @@ def dashboard():
 # ADMIN
 
 
-@app.route('/admin')
+@app.route('/admin', methods=['POST', 'GET'])
 @is_admin
 def admin():
     # Making a cursor to use the db
@@ -158,6 +155,25 @@ def admin():
     cur.execute("SELECT * FROM equipaments;")
     data = cur.fetchall()
     cur.close()
+    equips = data
+    # If user made a search
+    if request.method == "POST":
+        # search for the correct equipments
+        if "equiptype" in request.form and request.form["equiptype"] != "Mostrar Todos" and request.form["equiptype"] != "Equipamento...":
+            data = []
+            for e in equips:
+                if e["type"] == request.form["equiptype"]:
+                    data.append(e)
+
+        if "visibility" in request.form and request.form["visibility"] != "Mostrar Todos":
+            data = []
+            for e in equips:
+                if request.form["visibility"] == "Visiveis":
+                    visible = 1
+                else:
+                    visible = 0
+                if e["visible"] == visible:
+                    data.append(e)
 
     return render_template('admin.html', data=data)
 
