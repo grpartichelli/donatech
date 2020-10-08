@@ -13,7 +13,7 @@ from functools import wraps
 def is_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if session["logged_in"]:
+        if "logged_in" in session and session["logged_in"]:
             return f(*args, **kwargs)
         else:
             flash("Por favor login para poder acessar essa área.", "danger")
@@ -30,5 +30,5 @@ def is_admin(f):
             return f(*args, **kwargs)
         else:
             flash("Somente Administradores podem acessar essa área", "danger")
-            return redirect(url_for("index"))
+            return redirect(url_for("home_api.index"))
     return wrap

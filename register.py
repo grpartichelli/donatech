@@ -33,5 +33,5 @@ def register():
         mysql.connection.commit()
         cur.close()
         flash("Você foi cadastrado com sucesso", "success")
-        redirect(url_for("index"))
+        redirect(url_for("home_api.index"))
     return render_template('register.html', form=form)
