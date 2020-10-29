@@ -68,4 +68,10 @@ def delete_equip(equipid):
     flash("Equipamento foi deletado.", "success")
     return redirect(url_for('admin_api.admin'))
 
-#################################
+################################# TRANSACTION #################
+
+
+@is_admin
+@admin_api.route('/admin/transaction', methods=['POST', 'GET'])
+def admin_transaction():
+    return render_template("admin_transaction.html")
