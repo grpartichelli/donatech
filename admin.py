@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, request, render_template, flash, redirect, url_for, session, logging
 from mysqldb import mysql
 from wrappers import is_admin
+import ast
 
 admin_api = Blueprint('admin_api', __name__)
 ####################################################################
@@ -63,6 +64,8 @@ def delete_equip(equipid):
 
     cur.execute(
         "DELETE from equipaments where equipid = %s", (equipid))
+    cur.execute(
+        "DELETE from wishlist where equipid = %s", (equipid))
     mysql.connection.commit()
     cur.close()
     flash("Equipamento foi deletado.", "success")
@@ -74,4 +77,36 @@ def delete_equip(equipid):
 @is_admin
 @admin_api.route('/admin/transaction', methods=['POST', 'GET'])
 def admin_transaction():
-    return render_template("admin_transaction.html")
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM (SELECT  userid as wisherid , equipid as wequipid FROM wishlist) as wishes JOIN (SELECT equipid , userid as donatorid, marca, description, type from equipaments) as equips WHERE equips.equipid = wishes.wequipid ORDER BY equipid;")
+    data = cur.fetchall()
+
+    # Para cada equipamento vamos separar uma lista de quem deseja ele
+    equipments = []
+    wishers = []
+    for i in range(len(data)):
+        d = data[i]
+        wishers.append(d["wisherid"])
+
+        if(i == len(data)-1 or d["equipid"] != data[i+1]["equipid"]):
+            equipments.append({"equipid": d["equipid"], "donatorid": d["donatorid"], "wishers": wishers, "num_of_wishers": str(len(wishers)),
+                               "marca": d["marca"], "description": d["description"], "type": d["type"]})
+            wishers = []
+
+    return render_template("admin_transaction.html", data=equipments)
+
+
+@is_admin
+@admin_api.route('/admin/transaction/select_donee/<data>/', methods=['POST', 'GET'])
+def select_donee(data):
+    data_dict = {}
+    data_dict = ast.literal_eval(data)
+    print("DATA")
+    print(data_dict)
+    users = []
+    for u in data_dict["wishers"]:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT name,email,cpf FROM users WHERE id = %s", (u,))
+        users.append(cur.fetchall()[0])
+    print(users)
+    return render_template("select_donee.html", data=data_dict, users=users)

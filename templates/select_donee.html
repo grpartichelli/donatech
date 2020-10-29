@@ -12,27 +12,25 @@
 
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
-        <h3> Selecione um Equipamento Para a Transação </h3>
-        <p class="lead"> Esses equipamentos foram adicionados por usuários em suas listas de desejo.</p>
+        <h3> Equipamento {{data["type"]}} - {{data["marca"]}}</h3>
+        <p class="lead"> Selecione um Donatário que desejou esse equipamente para recebê-lo.</p>
 
 
-
-
-
-        {% for d in data %}
+        {% for u in users %}
         <div class="row">
-            <div class="col-md-3">{{d["marca"]}}</div>
-            <div class="col-md-3">{{d["type"]}}</div>
-            <div class="col-md-3">{{d["description"]}}</div>
-            <div class="col-md-3">{{"Número de Donatários "+d["num_of_wishers"]}}</div>
+            <div class="col-md-4">{{"Nome: "+u["name"]}}</div>
+            <div class="col-md-4">{{"CPF: "+u["cpf"]}}</div>
+            <div class="col-md-4">{{"Email: " +u["email"]}}</div>
+
+
         </div>
 
         <form action="{{ url_for('admin_api.select_donee', data = d)}}" method=post>
-            <input class="btn btn-lg btn-primary" type="submit" value=" Selecionar Donatário">
+            <input class="btn btn-lg btn-success" type="submit" value=" Realizar Transação">
         </form>
         <hr class="mb-2">
-        {% endfor %}
 
+        {% endfor %}
 
 
 
