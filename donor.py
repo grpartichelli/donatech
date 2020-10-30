@@ -20,8 +20,8 @@ def doar():
             # Making a cursor to use the db
             cur = mysql.connection.cursor()
 
-            cur.execute("INSERT INTO equipaments(userid, marca, description,type, visible,donated) VALUES(%s,%s,%s,%s,%s)",
-                        (userid, marca, description, tipo, 0, 0))
+            cur.execute("INSERT INTO equipaments(userid, marca, description,type, visible) VALUES(%s,%s,%s,%s,%s)",
+                        (userid, marca, description, tipo, 0))
             mysql.connection.commit()
             cur.close()
             flash(
