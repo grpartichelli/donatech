@@ -72,6 +72,7 @@ def delete_equip(equipid):
     return redirect(url_for('admin_api.admin'))
 
 ################################# TRANSACTION #################
+# LISTA DE EQUIPAMENTOS DESEJADOS
 
 
 @is_admin
@@ -95,6 +96,8 @@ def admin_transaction():
 
     return render_template("admin_transaction.html", data=equipments)
 
+# PAGINA DE SELEÇÃO DE DONATARIO
+
 
 @is_admin
 @admin_api.route('/admin/transaction/select_donee/<data>/', methods=['POST', 'GET'])
@@ -108,6 +111,8 @@ def select_donee(data):
         users.append(cur.fetchall()[0])
     print(users)
     return render_template("select_donee.html", data=data_dict, users=users)
+
+# REALIZA A TRANSAÇÃO ADICIONANDO A TABELA
 
 
 @is_admin
@@ -129,3 +134,17 @@ def do_transaction(wisherid, donorid, equipid):
     flash("Transição registrada! Os usuários envolvidos serão avisados.", "success")
 
     return redirect(url_for('admin_api.admin_transaction'))
+
+# LISTA DE TRANSAÇÕES REALIZADAS
+
+
+@is_admin
+@admin_api.route('/admin/transaction/done')
+def admin_transaction_done():
+    data = []
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT name as donorname, cpf as donorcpf, email as donoremail, wishername,wishercpf,wisheremail,marca,description,type from users JOIN (SELECT name as wishername,cpf as wishercpf, email as wisheremail,donorid,marca,description,type from (SELECT wisherid,donorid,marca,description,type FROM transaction JOIN equipaments where transaction.equipid = equipaments.equipid) as transequips JOIN users where transequips.wisherid = users.id) as wishequips where wishequips.donorid = users.id")
+    data = cur.fetchall()
+
+    return render_template("admin_transaction_done.html", data=data)

@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/grid.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<body class="text-center bg-light">
+
+    <div class="container d-flex h-150 p-3 mx-auto flex-column">
+
+        <h2> Transações Realizadas:</h2>
+        <hr class="mb-2">
+
+        {% for d in data %}
+        <div class="row">
+            <div class="col-md-4">{{ "Equipamento: " +  d["marca"] + ", " + d["type"] + ", " +d["description"] }}
+            </div>
+            <div class="col-md-4">
+                {{ "Donatário: " +  d["wishername"] + ", " + d["wishercpf"] + ", " +d["wisheremail"] }}</div>
+
+            <div class="col-md-4">{{ "Doador: " +  d["donorname"] + ", " + d["donorcpf"] + ", " +d["donoremail"] }}
+            </div>
+
+
+
+            <hr class="mb-1">
+            {% endfor %}
+
+
+
+
+
+
+        </div>
+
+
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+        <script src="../../assets/js/vendor/popper.min.js"></script>
+        <script src="../../dist/js/bootstrap.min.js"></script>
+</body>
+{%endblock %}
