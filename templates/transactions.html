@@ -33,9 +33,15 @@
 
             <div class="col-md-4">{{ "Doador: " +  d["donorname"] + ", " + d["donorcpf"] + ", " +d["donoremail"] }}
             </div>
-            <hr class="mb-1">
-            {% endfor %}
         </div>
+
+        <form action=" {{ url_for('transactions_api.get_titulo')}}" method=post>
+            <input class="btn btn-lg btn-secondary" type="submit" value="Obter Título">
+        </form>
+        <hr class="mb-1">
+
+        {% endfor %}
+
 
     </div>
     <div class="container d-flex h-150 p-3 mx-auto flex-column">
@@ -55,10 +61,17 @@
             <div class="col-md-4">{{ "Doador: " +  d["donorname"] + ", " + d["donorcpf"] + ", " +d["donoremail"] }}
             </div>
 
-            <hr class="mb-1">
-            {% endfor %}
+
 
         </div>
+
+        <form action=" {{ url_for('transactions_api.get_titulo')}}" method=post>
+            <input class="btn btn-lg btn-secondary" type="submit" value="Obter Título">
+        </form>
+        <hr class="mb-1">
+
+
+        {% endfor %}
 
 
 

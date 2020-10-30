@@ -1,3 +1,4 @@
+import pdfkit
 from flask import Flask, Blueprint, request, render_template, flash, redirect, url_for, session, logging
 from mysqldb import mysql
 from wrappers import is_logged_in
@@ -21,3 +22,9 @@ def transactions():
             received.append(t)
 
     return render_template("transactions.html", donated=donated, received=received)
+
+
+@is_logged_in
+@transactions_api.route('/get_titulo', methods=['POST'])
+def get_titulo():
+    return redirect(url_for('transactions_api.transactions'))
