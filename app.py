@@ -10,6 +10,7 @@ from dashboard import dashboard_api
 from admin import admin_api
 from donor import donor_api
 from donee import donee_api
+from transactions import transactions_api
 
 app = Flask(__name__)
 
@@ -33,6 +34,7 @@ app.register_blueprint(dashboard_api)
 app.register_blueprint(admin_api)
 app.register_blueprint(donor_api)
 app.register_blueprint(donee_api)
+app.register_blueprint(transactions_api)
 
 #############################################################################
 
