@@ -78,7 +78,7 @@ def delete_equip(equipid):
 @admin_api.route('/admin/transaction', methods=['POST', 'GET'])
 def admin_transaction():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM (SELECT  userid as wisherid , equipid as wequipid FROM wishlist) as wishes JOIN (SELECT equipid , userid as donatorid, marca, description, type from equipaments) as equips WHERE equips.equipid = wishes.wequipid ORDER BY equipid;")
+    cur.execute("SELECT * FROM (SELECT  userid as wisherid , equipid as wequipid FROM wishlist) as wishes JOIN (SELECT equipid , userid as donatorid, marca, description, type from equipaments where donated=0) as equips WHERE equips.equipid = wishes.wequipid ORDER BY equipid;")
     data = cur.fetchall()
 
     # Para cada equipamento vamos separar uma lista de quem deseja ele
@@ -115,4 +115,17 @@ def select_donee(data):
 def do_transaction(wisherid, donorid, equipid):
     print("DATA")
     print(wisherid, donorid, equipid)
+
+    cur = mysql.connection.cursor()
+
+    cur.execute("INSERT INTO transaction(wisherid,donorid,equipid) VALUES(%s,%s,%s)",
+                (wisherid, donorid, equipid))
+
+    cur.execute(
+        "UPDATE equipaments SET donated = %s  WHERE equipid = %s", (1, equipid))
+
+    mysql.connection.commit()
+    cur.close()
+    flash("Transição registrada! Os usuários envolvidos serão avisados.", "success")
+
     return redirect(url_for('admin_api.admin_transaction'))
