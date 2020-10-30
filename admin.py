@@ -113,5 +113,6 @@ def select_donee(data):
 @is_admin
 @admin_api.route('/admin/transaction/select_donee/do_transaction/<wisherid>/<donorid>/<equipid>/', methods=['POST', 'GET'])
 def do_transaction(wisherid, donorid, equipid):
-
+    print("DATA")
+    print(wisherid, donorid, equipid)
     return redirect(url_for('admin_api.admin_transaction'))

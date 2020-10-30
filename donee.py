@@ -12,7 +12,8 @@ def procuraritems():
 
     # Making a cursor to use the db
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM equipaments where visible = 1 and donated=0")
+    cur.execute(
+        "SELECT * FROM equipaments where visible = 1 and donated=0 and userid!=%s", (session["userid"],))
     equips = cur.fetchall()
 
     # remove items on the users wishlist
@@ -45,7 +46,7 @@ def procuraritems():
     return render_template("procuraritems.html", data=data)
 
 
-@donee_api.route('/add_to_wishlist/<equipid>', methods=['POST'])
+@ donee_api.route('/add_to_wishlist/<equipid>', methods=['POST'])
 def add_to_wishlist(equipid):
     # Making a cursor to change the db
     cur = mysql.connection.cursor()
@@ -57,12 +58,13 @@ def add_to_wishlist(equipid):
     return redirect(url_for('donee_api.procuraritems'))
 
 
-@donee_api.route('/wishlist', methods=['GET', 'POST'])
+@ donee_api.route('/wishlist', methods=['GET', 'POST'])
 def wishlist():
 
     # Making a cursor to use the db
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM equipaments where visible = 1 and donated=0")
+    cur.execute(
+        "SELECT * FROM equipaments where visible = 1 and donated=0 and userid!=%s", (session["userid"],))
     equips = cur.fetchall()
 
     # remove items on the users wishlist
