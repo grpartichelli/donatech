@@ -13,7 +13,7 @@ admin_api = Blueprint('admin_api', __name__)
 def admin():
     # Making a cursor to use the db
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM equipaments;")
+    cur.execute("SELECT * FROM equipaments where donated=0;")
     data = cur.fetchall()
     cur.close()
     equips = data
@@ -89,7 +89,7 @@ def admin_transaction():
         wishers.append(d["wisherid"])
 
         if(i == len(data)-1 or d["equipid"] != data[i+1]["equipid"]):
-            equipments.append({"equipid": d["equipid"], "donatorid": d["donatorid"], "wishers": wishers, "num_of_wishers": str(len(wishers)),
+            equipments.append({"equipid": d["equipid"], "donorid": d["donatorid"], "wishers": wishers, "num_of_wishers": str(len(wishers)),
                                "marca": d["marca"], "description": d["description"], "type": d["type"]})
             wishers = []
 
@@ -101,12 +101,17 @@ def admin_transaction():
 def select_donee(data):
     data_dict = {}
     data_dict = ast.literal_eval(data)
-    print("DATA")
-    print(data_dict)
     users = []
     for u in data_dict["wishers"]:
         cur = mysql.connection.cursor()
-        cur.execute("SELECT name,email,cpf FROM users WHERE id = %s", (u,))
+        cur.execute("SELECT id,name,email,cpf FROM users WHERE id = %s", (u,))
         users.append(cur.fetchall()[0])
     print(users)
     return render_template("select_donee.html", data=data_dict, users=users)
+
+
+@is_admin
+@admin_api.route('/admin/transaction/select_donee/do_transaction/<wisherid>/<donorid>/<equipid>/', methods=['POST', 'GET'])
+def do_transaction(wisherid, donorid, equipid):
+
+    return redirect(url_for('admin_api.admin_transaction'))

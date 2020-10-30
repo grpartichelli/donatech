@@ -12,7 +12,7 @@ def procuraritems():
 
     # Making a cursor to use the db
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM equipaments where visible = 1")
+    cur.execute("SELECT * FROM equipaments where visible = 1 and donated=0")
     equips = cur.fetchall()
 
     # remove items on the users wishlist
@@ -62,7 +62,7 @@ def wishlist():
 
     # Making a cursor to use the db
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM equipaments where visible = 1")
+    cur.execute("SELECT * FROM equipaments where visible = 1 and donated=0")
     equips = cur.fetchall()
 
     # remove items on the users wishlist
