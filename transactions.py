@@ -1,4 +1,5 @@
-import pdfkit
+
+import ast
 from flask import Flask, Blueprint, request, render_template, flash, redirect, url_for, session, logging
 from mysqldb import mysql
 from wrappers import is_logged_in
@@ -25,6 +26,14 @@ def transactions():
 
 
 @is_logged_in
-@transactions_api.route('/get_titulo', methods=['POST'])
-def get_titulo():
-    return redirect(url_for('transactions_api.transactions'))
+@transactions_api.route('/get_titulo/<donated>/<received>', methods=['POST'])
+def get_titulo(donated, received):
+    data_dict = {}
+    data_dict = ast.literal_eval(donated)
+
+    isDonor = True
+    if not bool(data_dict):
+        isDonor = False
+        data_dict = ast.literal_eval(received)
+
+    return render_template('titulo.html', data=data_dict, isDonor=isDonor)

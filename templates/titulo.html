@@ -1,0 +1,110 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            height: 297mm;
+            width: 210mm;
+
+
+        }
+    </style>
+    <title>Donatech</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" </head>
+
+<body class="text-center bg-white">
+
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+
+
+        <main role="main" class="inner cover">
+            {%if isDonor==True%}
+            <h1 style=" margin: 0;
+            position: absolute;
+            top: 0%;
+            margin-left: 10%;
+            -ms-transform: translateY(+50%);
+            transform: translateY(+50%);" class="cover-heading">Título de Patrocinador e Incetivador da Educação</h1>
+            <br>
+            <p style=" margin: 0;
+            position: absolute;
+            top: 45%;
+            margin-left: 5%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);" class="lead">NÓS DA DONATECH AGRADECEMOS, {{data["donorname"].upper()}} DE
+                CPF: {{data["donorpf"]}},
+                PELA DOAÇÃO DO EQUIPAMENTO {{data["type"].upper() + " - " + data["marca"].upper()}}, <br>
+                QUE SERÁ RECEBIDO POR {{data["wishername"].upper()}} DE CPF
+                {{data["wishercpf"].upper()}} PARA SER UTILIZADO EM SUA EDUCAÇÃO E ATIVIDADES REMOTAS. <br> OBRIGADO POR
+                AJUDAR A DONATECH A
+                PATROCINAR E INCENTIVAR O APRENDIZADO NO BRASIL.
+            </p>
+
+            <br>
+
+            <p style=" margin: 0;
+            position: absolute;
+            top: 80%;
+            
+            left: 20%; 
+            width:60%" class="lead">Donatech, 2020
+            </p>
+
+            {% else %}
+            <h1 style=" margin: 0;
+            position: absolute;
+            top: 0%;
+            margin-left: 5%;
+            -ms-transform: translateY(+50%);
+            transform: translateY(+50%);" class="cover-heading">TÍTULO DE COMPROMETIMENTO DE USO COM OBJETIVO
+                EDUCACIONAL</h1>
+            <br><br>
+            <p style=" margin: 0;
+            position: absolute;
+            top: 45%;
+            margin-left: 5%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);" class="lead">EU, {{data["wishername"].upper()}} DE CPF:
+                {{data["wishercpf"]}},
+                GARANTO QUE O UTILIZAREI O EQUIPAMENTO
+                {{data["type"].upper() + " - " + data["marca"].upper()}}, DOADO POR {{data["donorname"].upper()}} DE CPF
+                {{data["donorcpf"].upper()}} <BR> PRINCIPALMENTE COMO UMA FERRAMENTA DE EDUCAÇÃO E REALIZAÇÃO DE
+                ATIVIDADES REMOTAS, SOB RISCO DE DEVOLUÇÃO DO MESMO.
+            </p>
+
+            <br>
+            <p style=" margin: 0;
+            position: absolute;
+            top: 80%;
+           
+            float:left; 
+            width:50%" class="lead">ASSINATURA: ____________________</p>
+            <p style=" margin: 0;
+            position: absolute;
+            top: 80%;
+            
+            left: 50%; 
+            width:50%" class="lead">Donatech, 2020
+            </p>
+            {% endif %}
+
+
+
+
+        </main>
+
+
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+</body>
