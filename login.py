@@ -38,16 +38,16 @@ def login():
                 er = "Login falhou."
 
                 cur.close()
-                return render_template('login.html', error=er)
+                return render_template('login/login.html', error=er)
 
         else:
             er = "Email não encontrado."
 
             cur.close()
-            return render_template('login.html', error=er)
+            return render_template('login/login.html', error=er)
 
         cur.close()
-    return render_template('login.html')
+    return render_template('login/login.html')
 
 ###############################################
 # LOGOUT

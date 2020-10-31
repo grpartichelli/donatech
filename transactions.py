@@ -22,7 +22,7 @@ def transactions():
         if t["wisherid"] == session["userid"]:
             received.append(t)
 
-    return render_template("transactions.html", donated=donated, received=received)
+    return render_template("transactions/transactions.html", donated=donated, received=received)
 
 
 @is_logged_in
@@ -36,4 +36,4 @@ def get_titulo(donated, received):
         isDonor = False
         data_dict = ast.literal_eval(received)
 
-    return render_template('titulo.html', data=data_dict, isDonor=isDonor)
+    return render_template('transactions/titulo.html', data=data_dict, isDonor=isDonor)

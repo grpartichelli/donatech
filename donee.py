@@ -43,7 +43,7 @@ def procuraritems():
                 if e["type"] == request.form["equiptype"]:
                     data.append(e)
 
-    return render_template("procuraritems.html", data=data)
+    return render_template("donee/procuraritems.html", data=data)
 
 
 @ donee_api.route('/add_to_wishlist/<equipid>', methods=['POST'])
@@ -91,5 +91,5 @@ def wishlist():
                 if e["type"] == request.form["equiptype"]:
                     data.append(e)
 
-    return render_template("wishlist.html", data=data)
+    return render_template("donee/wishlist.html", data=data)
 ############################################

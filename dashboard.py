@@ -9,6 +9,6 @@ dashboard_api = Blueprint('dashboard_api', __name__)
 @dashboard_api.route('/dashboard')
 @is_logged_in
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard/dashboard.html')
 
 ####################################################################

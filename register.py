@@ -34,4 +34,4 @@ def register():
         cur.close()
         flash("Você foi cadastrado com sucesso", "success")
         redirect(url_for("home_api.index"))
-    return render_template('register.html', form=form)
+    return render_template('register/register.html', form=form)

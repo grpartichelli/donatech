@@ -36,7 +36,7 @@ def admin():
                 if e["visible"] == visible:
                     data.append(e)
 
-    return render_template('admin.html', data=data)
+    return render_template('admin/admin.html', data=data)
 
 
 @is_admin
@@ -94,7 +94,7 @@ def admin_transaction():
                                "marca": d["marca"], "description": d["description"], "type": d["type"]})
             wishers = []
 
-    return render_template("admin_transaction.html", data=equipments)
+    return render_template("admin/admin_transaction.html", data=equipments)
 
 # PAGINA DE SELEÇÃO DE DONATARIO
 
@@ -110,7 +110,7 @@ def select_donee(data):
         cur.execute("SELECT id,name,email,cpf FROM users WHERE id = %s", (u,))
         users.append(cur.fetchall()[0])
     print(users)
-    return render_template("select_donee.html", data=data_dict, users=users)
+    return render_template("admin/select_donee.html", data=data_dict, users=users)
 
 # REALIZA A TRANSAÇÃO ADICIONANDO A TABELA
 
@@ -147,4 +147,4 @@ def admin_transaction_done():
     cur.execute("SELECT name as donorname, cpf as donorcpf, email as donoremail, wishername,wishercpf,wisheremail,marca,description,type from users JOIN (SELECT name as wishername,cpf as wishercpf, email as wisheremail,donorid,marca,description,type from (SELECT wisherid,donorid,marca,description,type FROM transaction JOIN equipaments where transaction.equipid = equipaments.equipid) as transequips JOIN users where transequips.wisherid = users.id) as wishequips where wishequips.donorid = users.id")
     data = cur.fetchall()
 
-    return render_template("admin_transaction_done.html", data=data)
+    return render_template("admin/admin_transaction_done.html", data=data)

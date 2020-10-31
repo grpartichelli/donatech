@@ -29,8 +29,8 @@ def doar():
             return redirect(url_for('dashboard_api.dashboard'))
 
         else:
-            return render_template('doar.html', error="Você deve marcar a checkbox.")
+            return render_template('donor/doar.html', error="Você deve marcar a checkbox.")
 
-    return render_template('doar.html')
+    return render_template('donor/doar.html')
 
 ####################################################################

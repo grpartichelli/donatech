@@ -10,4 +10,4 @@ def index():
     if "logged_in" in session and session["logged_in"]:
         return redirect(url_for("dashboard_api.dashboard"))
     else:
-        return render_template('home.html')
+        return render_template('home/home.html')
